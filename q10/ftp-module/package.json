@@ -1,0 +1,17 @@
+{
+  "name": "simple-ftp-module",
+  "version": "1.0.0",
+  "description": "it is a simple ftp module with connection, upload, download and list functionality",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "keywords": [
+    "ftp"
+  ],
+  "author": "tamanna shah",
+  "license": "",
+  "dependencies": {
+    "basic-ftp": "^5.0.5"
+  }
+}

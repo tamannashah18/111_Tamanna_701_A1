@@ -1,0 +1,23 @@
+1. Develop nodejs application with following requirements:
+- Develop a route "/gethello" with GET method. It displays "Hello NodeJS!!" as response.
+- Make an HTML page and display.
+- Call "/gethello" route from HTML page using AJAX call. (Any frontend AJAX call API can be
+used.)
+2. Develop a web server which serves static resources.
+3. Develop a module for domain specific chatbot and use it in a command line application.
+4. Write a program to create a compressed zip file for a folder.
+5. Write a program to extract a zip file.
+6. Write a program to promisify fs.unlink function and call it.
+7. Fetch data of google page using note-fetch using async-await model.
+8. Set a server script, a test script and 3 user defined scripts in package.json file in your nodejs
+application.
+9. A program which calls useful functions in fs modile.
+10. A program which uses global objects in nodejs.
+11. Develop a useful package and publish it on npmjs.com
+
+
+
+Only a single github link should be submitted here which contains the following:
+   - A single folder with name   --  RNO_Name_701_A1 (eg. 001_studname_701_A1) folder. It contains following:
+            -  1 folder per problem
+            - A PDF file with your RNO name, div details and program wise output screenshots
