@@ -3,17 +3,18 @@
     "archiver": "^7.0.1",
     "express": "^5.1.0",
     "express-static": "^1.2.6",
-    "node-fetch": "^3.3.2",
+    "node-fetch": "^2.7.0",
     "node-static": "^0.7.11",
+    "path": "^0.12.7",
     "simple-ftp-module": "^1.0.0",
     "unzipper": "^0.12.3"
   },
   "scripts": {
-    "start": "nodemon q1.js",
+    "start": "nodemon q1/q1.js",
     "test": "node --version",
-    "server": "nodemon q3.js",
-    "zip": "nodemon q4.js",
-    "unzip": "node q5.js",
-    "delete-file": "node q7.js"
+    "server": "nodemon q3/q3.js",
+    "zip": "nodemon q4/q4.js",
+    "unzip": "node q5/q5.js",
+    "delete-file": "node q7/q7.js"
   }
 }

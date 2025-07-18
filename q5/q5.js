@@ -1,50 +1,41 @@
 const fs = require('fs');
-const unzipper = require('unzipper');
-const readline = require('readline');
 const path = require('path');
+const unzipper = require('unzipper');
 
-// Function to extract ZIP
+async function unzipFile(sourcePath, destinationPath) {
+    // Validate source and destination paths
+    if (!sourcePath || !destinationPath) {
+        console.error('Usage: node unzip.js <source_zip_file> <destination_directory>');
+        process.exit(1); 
+    }
 
-async function extractZip(zipPath, outputDir) {
-    const resolvedZipPath = path.resolve(zipPath);
-    const resolvedOutputDir = path.resolve(outputDir);
+    // Ensure the source file exists
+    if (!fs.existsSync(sourcePath)) {
+        console.error(`Error: Source file not found at ${sourcePath}`);
+        process.exit(1); 
+    }
 
-    if (!fs.existsSync(resolvedZipPath)) {
-        console.error(`❌ ZIP file not found: ${resolvedZipPath}`);
-        return;
+    // Resolve absolute paths for security and consistency
+    const absoluteSourcePath = path.resolve(sourcePath);
+    const absoluteDestinationPath = path.resolve(destinationPath);
+
+    // Create the destination directory if it doesn't exist
+    if (!fs.existsSync(absoluteDestinationPath)) {
+        fs.mkdirSync(absoluteDestinationPath, { recursive: true });
     }
 
     try {
-        const directory = await unzipper.Open.file(resolvedZipPath);
-        await Promise.all(directory.files.map(async file => {
-            const filePath = path.join(resolvedOutputDir, file.path);
-            if (file.type === 'File') {
-                await file.stream().pipe(fs.createWriteStream(filePath));
-                console.log(`✅ Extracted: ${file.path}`);
-            }
-        }));
-        console.log(`🎉 Extraction complete to: ${resolvedOutputDir}`);
+        await fs.createReadStream(absoluteSourcePath)
+            .pipe(unzipper.Extract({ path: absoluteDestinationPath }))
+            .promise();
+        console.log(`Successfully unzipped "${absoluteSourcePath}" to "${absoluteDestinationPath}"`); // {Link: According to DEV Community, logging is crucial for identifying issues, debugging, and monitoring the health of your Node.js application https://dev.to/romulo.gatto/error-handling-and-logging-in-node-js-d0e354d8c24b}.
     } catch (err) {
-        console.error(`❌ Extraction failed: ${err.message}`);
+        console.error(`Error unzipping file: ${err.message}`);
+        process.exit(1);
     }
 }
 
-// If command-line args are provided
-if (process.argv.length >= 4) {
-    const zipPath = process.argv[2];
-    const outputDir = process.argv[3];
-    extractZip(zipPath, outputDir);
-} else {
-    // Use readline for interactive input
-    const rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    });
+// Get source and destination paths from command-line arguments
+const [, , source, destination] = process.argv;
 
-    rl.question('Enter path to ZIP file: ', (zipPath) => {
-        rl.question('Enter destination folder: ', (outputDir) => {
-            extractZip(zipPath.trim(), outputDir.trim());
-            rl.close();
-        });
-    });
-}
+unzipFile(source, destination); 

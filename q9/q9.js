@@ -24,10 +24,7 @@ fs.writeFile(filePath, 'This is a test file.', (err) => {
                     const stats = fs.statSync(renamedPath);
                     console.log('File stats:', stats);
 
-                    fs.unlink(renamedPath, (err) => {
-                        if (err) return console.error('Delete error:', err);
-                        console.log('File deleted.');
-                    });
+                   
                 });
             });
         } else {
